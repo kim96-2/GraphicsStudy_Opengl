@@ -138,6 +138,8 @@
   <ItemGroup>
     <None Include="fragment.frag" />
     <None Include="geomaty.geom" />
+    <None Include="normalFragment.frag" />
+    <None Include="normalGeomatry.geom" />
     <None Include="TessCS.glsl" />
     <None Include="TessES.glsl" />
     <None Include="vertex.vert" />

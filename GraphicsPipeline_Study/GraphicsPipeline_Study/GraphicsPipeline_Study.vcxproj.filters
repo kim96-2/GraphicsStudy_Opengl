@@ -16,6 +16,9 @@
     <Filter Include="리소스 파일\Shaders">
       <UniqueIdentifier>{0211d16f-0fb7-49a3-bb18-c5f6d93a3fd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Shaders\forNormal">
+      <UniqueIdentifier>{03f3fbef-a910-4d8f-8f2a-cc2515ca7442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pipeline.cpp">
@@ -37,6 +40,12 @@
     </None>
     <None Include="geomaty.geom">
       <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="normalGeomatry.geom">
+      <Filter>리소스 파일\Shaders\forNormal</Filter>
+    </None>
+    <None Include="normalFragment.frag">
+      <Filter>리소스 파일\Shaders\forNormal</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

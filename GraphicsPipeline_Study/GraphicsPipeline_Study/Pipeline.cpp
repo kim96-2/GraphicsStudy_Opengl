@@ -15,6 +15,7 @@ GLuint vao;
 
 //Shader 선언
 Shader* shaderProgram;
+Shader* normalShaderProgram;
 
 float rotateValue;
 
@@ -89,22 +90,23 @@ void InitShader() {
 	//shaderProgram = new Shader("vertex.vert", "fragment.frag");
 	shaderProgram = new Shader();
 
-	shaderProgram->AddShader(GL_VERTEX_SHADER, "vertex.vert");
-
+	shaderProgram->AddShader(GL_VERTEX_SHADER, "vertex.vert");					//Vertex Shader 추가
 	//Tessellation Shader 추가
 	//shaderProgram->AddShader(GL_TESS_CONTROL_SHADER, "TessCS.glsl");
 	//shaderProgram->AddShader(GL_TESS_EVALUATION_SHADER, "TessES.glsl");
-
-	//Geomatry Shader 추가
-	shaderProgram->AddShader(GL_GEOMETRY_SHADER, "geomaty.geom");
-
-	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "fragment.frag");
+	//shaderProgram->AddShader(GL_GEOMETRY_SHADER, "geomaty.geom");				//Geometry Shader 추가
+	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "fragment.frag");				//Fragment Shader 추가
 
 	shaderProgram->Use();//Shader Program 사용
 
-	GLint out;
-	glGetIntegerv(GL_PATCH_VERTICES, &out);
-	std::cout << out << std::endl;
+	//노말 표시용 Shader
+	normalShaderProgram = new Shader();
+
+	normalShaderProgram->AddShader(GL_VERTEX_SHADER, "vertex.vert");			//Vertex Shader 추가
+	normalShaderProgram->AddShader(GL_GEOMETRY_SHADER, "normalGeomatry.geom");	//Geomatry Shader 추가
+	normalShaderProgram->AddShader(GL_FRAGMENT_SHADER, "normalFragment.frag");	//Fragment Shader 추가
+
+
 }
 
 void InitDisplay() {
@@ -128,13 +130,16 @@ void displayFunc() {
 	//버텍스 그리기
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 
-	shaderProgram->SetModelProjection();
+	shaderProgram->Use();//Shader Program 사용
+	shaderProgram->SetModelProjection();//MVP 연동
 
 	glColor3f(1.0f, .5f, .5f);
-
-	
 	glutSolidTeapot(0.5);
-	//glutWireTeapot(0.5);
+
+	normalShaderProgram->Use();
+	normalShaderProgram->SetModelProjection();
+
+	glutSolidTeapot(0.5);
 	
 
 	glutSwapBuffers();
