@@ -19,6 +19,9 @@
     <Filter Include="리소스 파일\Shaders\forNormal">
       <UniqueIdentifier>{03f3fbef-a910-4d8f-8f2a-cc2515ca7442}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Shaders\Model">
+      <UniqueIdentifier>{2c17f928-d904-442e-973c-1c7b60a1d746}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pipeline.cpp">
@@ -47,9 +50,24 @@
     <None Include="normalFragment.frag">
       <Filter>리소스 파일\Shaders\forNormal</Filter>
     </None>
+    <None Include="ModelVertex.vert">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
+    <None Include="ModelFragment.frag">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

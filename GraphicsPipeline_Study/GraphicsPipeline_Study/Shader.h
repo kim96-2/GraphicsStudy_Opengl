@@ -25,6 +25,7 @@ public:
 	void Use();
 
 	//Uniform 설정 함수
+	void SetTexture(const std::string& name, int value);
 	void SetFloat(const std::string& name, float value);
 	void SetVector3f(const std::string& name, float x,float y,float z);
 	void SetMatrix4fv(const std::string& name, GLfloat* matrix4);
@@ -196,6 +197,10 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath) {
 
 void Shader::Use() {
 	glUseProgram(ID);
+}
+
+void Shader::SetTexture(const std::string& name, int value) {
+	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
 
 void Shader::SetFloat(const std::string& name, float value) {
