@@ -31,6 +31,9 @@ void main(){
 	float ndotl = dot(normal,lightDir);
 	float halfNdotL = ndotl * 0.5 + 0.5;
 
+	float celShade = smoothstep(0.5,0.52,halfNdotL);//맞는 문장 같은데 컴파일러가 오류라고 판단한다. 실제로는 문제 없음
+	celShade = 0.4 * (1 - celShade) + 1 * celShade;
+
 	ndotl = ndotl < 0 ? 0 : ndotl;
 
 	//Blinn Phong으로 Specular 계산
@@ -40,7 +43,7 @@ void main(){
 
 	float spec = pow(NdotH,100);
 
-	vec3 color = diffuseColor.rgb * halfNdotL + spec;
+	vec3 color = diffuseColor.rgb * celShade + spec;
 
 	oCol =  vec4(1,1,1,1);
 	oCol =  vec4(color,1);
