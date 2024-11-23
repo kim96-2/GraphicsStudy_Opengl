@@ -59,7 +59,13 @@ void Model::loadModel(string path) {
     Assimp::Importer import;
 
     //씬 읽어오기(aiProcess_Triangulate => 모든 매쉬 삼각형으로, aiProcess_FlipUVs => UV 뒤집어서 읽기)
-    const aiScene * scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene * scene = import.ReadFile(path, 
+        aiProcess_Triangulate | 
+        aiProcess_FlipUVs |
+        //aiProcess_GenSmoothNormals |
+        aiProcess_CalcTangentSpace |
+        aiProcess_GenUVCoords
+    );
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         cout << "ERROR::ASSIMP::" << import.GetErrorString() << endl;
@@ -131,11 +137,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             vector.y = mesh->mTangents[i].y;
             vector.z = mesh->mTangents[i].z;
             vertex.Tangent = vector;
+            
             // bitangent
             vector.x = mesh->mBitangents[i].x;
             vector.y = mesh->mBitangents[i].y;
             vector.z = mesh->mBitangents[i].z;
             vertex.Bitangent = vector;
+            
         }
         else
             vertex.TexCoords = glm::vec2(0.0f, 0.0f);

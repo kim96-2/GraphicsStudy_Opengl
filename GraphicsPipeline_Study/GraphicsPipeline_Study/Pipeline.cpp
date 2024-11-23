@@ -14,8 +14,8 @@
 #include "Model.h"
 
 //화면 크기 고정
-#define WIDTH 800
-#define HIGHT 800
+#define WIDTH 600
+#define HIGHT 600
 
 //Shader 선언
 Shader* shaderProgram;
@@ -105,30 +105,23 @@ void InitModelShader() {
 void InitModel() {
 	stbi_set_flip_vertically_on_load(false);
 
-	shaderProgram->Use();//Shader Program 사용
-
+	shaderProgram->Use();//Shader Program 사용	
+	
+	
 	char modelPath[] = "./resources/statue/CB_Discobolus_LOD0.FBX";
 	model = new Model(modelPath);
 
 	model->SetTextureDataFromFile("./resources/statue/manstatue.png","texture_diffuse");
 	model->SetTextureDataFromFile("./resources/statue/manstatue_N.png", "texture_normal");
-	//model->SetTextureDataFromFile(".\resources\statue\manstatue_S.png", "texture_specular");
 	
 	/*
-	unsigned int diffuse = TextureFromFile("./resources/statue/manstatue.png");
-	shaderProgram->SetTexture("texture_diffuse1", 0);
+	char modelPath[] = "./resources/RobotKyle/KyleRobot.fbx";
+	model = new Model(modelPath);
 
-	glActiveTexture(GL_TEXTURE0);
-	
-	glBindTexture(GL_TEXTURE_2D, diffuse);
-
-	unsigned int normal = TextureFromFile("./resources/statue/manstatue_N.png");
-	shaderProgram->SetTexture("texture_normal1", 1);
-
-	glActiveTexture(GL_TEXTURE1);
-	
-	glBindTexture(GL_TEXTURE_2D, normal);
+	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_BaseMap.png", "texture_diffuse");
+	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_Normal.png", "texture_normal");
 	*/
+	
 }
 
 void InitDisplay() {
