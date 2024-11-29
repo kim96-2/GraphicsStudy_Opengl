@@ -12,10 +12,11 @@
 
 #include "Shader.h"
 #include "Model.h"
+#include "FrameBuffer.h"
 
 //화면 크기 고정
 #define WIDTH 600
-#define HIGHT 600
+#define HEIGHT 600
 
 //Shader 선언
 Shader* shaderProgram;
@@ -23,6 +24,9 @@ Shader* normalShaderProgram;
 
 //그릴 모델 선언
 Model* model;
+
+//Frame Buffer 선언
+FrameBuffer* frameBuffer;
 
 float rotateValue;
 
@@ -98,8 +102,13 @@ void InitShader() {
 }
 
 void InitModelShader() {
-	shaderProgram = new Shader("ModelVertex.vert","ModelFragment.frag");
+	//shaderProgram = new Shader("ModelVertex.vert","ModelFragment.frag");
+	shaderProgram = new Shader();
+	shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex.vert");					//Vertex Shader 추가
+	shaderProgram->AddShader(GL_GEOMETRY_SHADER, "ModelGeometry.geom");				//Geometry Shader 추가
+	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "ModelFragment.frag");				//Fragment Shader 추가
 
+	shaderProgram->Use();//Shader Program 사용	
 }
 
 void InitModel() {
@@ -107,21 +116,25 @@ void InitModel() {
 
 	shaderProgram->Use();//Shader Program 사용	
 	
-	
+	/*
 	char modelPath[] = "./resources/statue/CB_Discobolus_LOD0.FBX";
 	model = new Model(modelPath);
 
 	model->SetTextureDataFromFile("./resources/statue/manstatue.png","texture_diffuse");
 	model->SetTextureDataFromFile("./resources/statue/manstatue_N.png", "texture_normal");
+	*/
 	
-	/*
 	char modelPath[] = "./resources/RobotKyle/KyleRobot.fbx";
 	model = new Model(modelPath);
 
 	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_BaseMap.png", "texture_diffuse");
 	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_Normal.png", "texture_normal");
-	*/
 	
+	
+}
+
+void InitFrameBuffer() {
+	frameBuffer = new FrameBuffer("FrameBufferVertex.vert", "FrameBufferFragment.frag", WIDTH, HEIGHT);
 }
 
 void InitDisplay() {
@@ -129,7 +142,7 @@ void InitDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(50, (float)WIDTH / HIGHT, 0.01, 10000);
+	gluPerspective(50, (float)WIDTH / HEIGHT, 0.01, 10000);
 
 	//광원 방향 Shader에 지정 및 전달
 	shaderProgram->SetVector3f("lightDirection", -1.0f, 1.0f, 0.5f);
@@ -152,13 +165,22 @@ void DrawModel() {
 }
 
 void displayFunc() {
+	//FrameBuffer 켜주기(이후 모든 렌더링은 화면이 아닌 새로운 frameBuffer로 들어감)
+	frameBuffer->SetFrameBuffer();
+
+
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	shaderProgram->Use();//Shader Program 사용
 	shaderProgram->SetModelProjection();//MVP 연동
 	
+	glLineWidth(1.5);
 	DrawModel();
+	glLineWidth(1.0);
+
+	frameBuffer->DrawFrameBuffer();
 
 	glutSwapBuffers();
 }
@@ -169,12 +191,23 @@ void TimerFunc(int value) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 1000, -3000, 0, 1000, 0, 0, 1, 0);
+	gluLookAt(0, 100, -300, 0, 100, 0, 0, 1, 0);
 	glRotatef(rotateValue, 0, 1, 0);
+
+	frameBuffer->frameBufferProgram->SetFloat("timer", rotateValue);
+	shaderProgram->SetFloat("timer", rotateValue);
 
 	glutPostRedisplay();
 
 	glutTimerFunc(30, TimerFunc, 1);
+}
+
+void MouseMove(GLint x, GLint y) {
+	frameBuffer->frameBufferProgram->SetVector2f("mousePos", x, y);
+
+	//cout << x << " " << y << endl;
+
+	glutPostRedisplay();
 }
 
 int main(int argc, char* argv[]) {
@@ -184,7 +217,7 @@ int main(int argc, char* argv[]) {
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 
 	//윈도우 크기 및 위치 설정
-	glutInitWindowSize(WIDTH, HIGHT);
+	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitWindowPosition(10, 10);
 
 	//윈도우 이름
@@ -198,11 +231,15 @@ int main(int argc, char* argv[]) {
 	//InitVertex();
 	InitModel();
 
+	InitFrameBuffer();
+
 	InitDisplay();
 
 	glutDisplayFunc(displayFunc);
 
 	glutTimerFunc(30, TimerFunc, 1);//회전 애니메이션을 위한 콜백 함수
+
+	glutMotionFunc(MouseMove); //마우스 이동 체크용 콜백 함수
 
 	glutMainLoop(); 
 

@@ -27,6 +27,7 @@ public:
 	//Uniform 설정 함수
 	void SetTexture(const std::string& name, int value);
 	void SetFloat(const std::string& name, float value);
+	void SetVector2f(const std::string& name, float x, float y);
 	void SetVector3f(const std::string& name, float x,float y,float z);
 	void SetMatrix4fv(const std::string& name, GLfloat* matrix4);
 	void SetMatrix4fv(const std::string& name, glm::mat4x4 matrix4);
@@ -205,6 +206,10 @@ void Shader::SetTexture(const std::string& name, int value) {
 
 void Shader::SetFloat(const std::string& name, float value) {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void Shader::SetVector2f(const std::string& name, float x, float y) {
+	glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
 }
 
 void Shader::SetVector3f(const std::string& name, float x, float y, float z) {

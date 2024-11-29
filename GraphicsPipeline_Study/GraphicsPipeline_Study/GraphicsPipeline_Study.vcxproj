@@ -137,8 +137,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.frag" />
+    <None Include="FrameBufferFragment.frag" />
+    <None Include="FrameBufferVertex.vert" />
     <None Include="geomaty.geom" />
     <None Include="ModelFragment.frag" />
+    <None Include="ModelGeometry.geom" />
     <None Include="ModelVertex.vert" />
     <None Include="normalFragment.frag" />
     <None Include="normalGeomatry.geom" />
@@ -147,6 +150,7 @@
     <None Include="vertex.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />

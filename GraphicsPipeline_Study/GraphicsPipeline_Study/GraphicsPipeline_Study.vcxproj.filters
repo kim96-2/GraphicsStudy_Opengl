@@ -22,6 +22,9 @@
     <Filter Include="리소스 파일\Shaders\Model">
       <UniqueIdentifier>{2c17f928-d904-442e-973c-1c7b60a1d746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Shaders\FrameBuffer">
+      <UniqueIdentifier>{978c0e06-7d44-4a29-a634-65905db66c4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pipeline.cpp">
@@ -56,6 +59,15 @@
     <None Include="ModelFragment.frag">
       <Filter>리소스 파일\Shaders\Model</Filter>
     </None>
+    <None Include="ModelGeometry.geom">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
+    <None Include="FrameBufferVertex.vert">
+      <Filter>리소스 파일\Shaders\FrameBuffer</Filter>
+    </None>
+    <None Include="FrameBufferFragment.frag">
+      <Filter>리소스 파일\Shaders\FrameBuffer</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -68,6 +80,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
