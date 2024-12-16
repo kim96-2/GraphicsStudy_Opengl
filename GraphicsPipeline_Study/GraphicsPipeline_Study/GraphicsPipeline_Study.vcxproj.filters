@@ -68,6 +68,9 @@
     <None Include="FrameBufferFragment.frag">
       <Filter>리소스 파일\Shaders\FrameBuffer</Filter>
     </None>
+    <None Include="ModelVertex_SquareRendering.vert">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">

@@ -15,11 +15,13 @@ void main()
     float greenOffset =  0.001;
     float blueOffset  = -0.01;
 
-    vec2 center = mousePos / textureSize(screenTexture,0).xy;
+    //vec2 center = mousePos / textureSize(screenTexture,0).xy;
+    vec2 center = vec2(0.5,0.5);
     vec2 dir =  TexCoords - center;
     
     float dis = sqrt(dir.x*dir.x + dir.y*dir.y);
-    dis = pow(dis, 0.2) * (1.6 + sin(timer * 0.1) * 0.8);
+    //dis = pow(dis, 0.2) * (1.6 + sin(timer * 0.1) * 0.8);
+    dis = pow(dis, 0.5);
 
     dir = normalize(dir) * dis;
 

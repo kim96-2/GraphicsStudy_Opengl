@@ -104,8 +104,9 @@ void InitShader() {
 void InitModelShader() {
 	//shaderProgram = new Shader("ModelVertex.vert","ModelFragment.frag");
 	shaderProgram = new Shader();
-	shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex.vert");					//Vertex Shader 추가
-	shaderProgram->AddShader(GL_GEOMETRY_SHADER, "ModelGeometry.geom");				//Geometry Shader 추가
+	//shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex.vert");					//Vertex Shader 추가
+	shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex_SquareRendering.vert");	
+	//shaderProgram->AddShader(GL_GEOMETRY_SHADER, "ModelGeometry.geom");				//Geometry Shader 추가
 	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "ModelFragment.frag");				//Fragment Shader 추가
 
 	shaderProgram->Use();//Shader Program 사용	
@@ -176,8 +177,22 @@ void displayFunc() {
 	shaderProgram->Use();//Shader Program 사용
 	shaderProgram->SetModelProjection();//MVP 연동
 	
+	glMatrixMode(GL_MODELVIEW);
+	
+
 	glLineWidth(1.5);
-	DrawModel();
+	//DrawModel();
+	for (int _x = -3;_x <= 3;_x++) {
+		for (int _y = -3;_y <= 3;_y++) {
+			for (int _z = -4;_z <= 4;_z++) {
+				glPushMatrix();
+				glTranslatef(_x * 100.0, _y * 100.0, _z * 50.0);
+				DrawModel();
+				glPopMatrix();
+			}
+			
+		}
+	}
 	glLineWidth(1.0);
 
 	frameBuffer->DrawFrameBuffer();
