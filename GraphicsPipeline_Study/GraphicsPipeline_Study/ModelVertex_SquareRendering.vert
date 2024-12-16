@@ -25,10 +25,12 @@ out DATA
 
 void main(){
 	//모든 뷰를 중앙의 구에 투영 후 위 구를 렌더링하는 방식 테스트
-	vec3 worldPos = (MODELVIEW_MATRIX * vec4(pos,1.0)).xyz;
 
-	float dis = length(worldPos);
-	vec3 dir = worldPos / dis;
+	//월드좌표 계산
+	vec3 positionWS = (MODELVIEW_MATRIX * vec4(pos,1.0)).xyz;
+
+	float dis = length(positionWS);
+	vec3 dir = positionWS / dis;
 
 	float x_a = acos(-dir.z / sqrt(dir.x * dir.x + dir.z * dir.z));
 	x_a = dir.x > 0 ? x_a : -x_a;
@@ -36,10 +38,9 @@ void main(){
 	float y_a = acos(-dir.z / sqrt(dir.y * dir.y + dir.z * dir.z));
 	y_a = dir.y > 0 ? y_a : -y_a;
 
-	gl_Position = vec4(x_a /PI * 2, y_a /PI * 2,dis / 1000, 1);
+	gl_Position = vec4(x_a /PI, y_a /PI,dis / 1000, 1);
 
-	//월드좌표 계산
-	vec3 positionWS = (MODELVIEW_MATRIX * vec4(pos,1.0)).xyz;
+	
 
 	//바라보는 방향(View Direction) 계산
 	data_out.viewDirectionWS = vec3(0,0,0) - positionWS;

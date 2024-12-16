@@ -182,11 +182,11 @@ void displayFunc() {
 
 	glLineWidth(1.5);
 	//DrawModel();
-	for (int _x = -3;_x <= 3;_x++) {
-		for (int _y = -3;_y <= 3;_y++) {
-			for (int _z = -4;_z <= 4;_z++) {
+	for (int _x = -2;_x <= 2;_x++) {
+		for (int _y = -5;_y <= 5;_y++) {
+			for (int _z = -3;_z <= 3;_z++) {
 				glPushMatrix();
-				glTranslatef(_x * 100.0, _y * 100.0, _z * 50.0);
+				glTranslatef(_x * 100.0, _y * 150.0, _z * 50.0);
 				DrawModel();
 				glPopMatrix();
 			}
@@ -206,6 +206,7 @@ void TimerFunc(int value) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	//glRotatef(rotateValue, 0, 1, 0);
 	gluLookAt(0, 100, -300, 0, 100, 0, 0, 1, 0);
 	glRotatef(rotateValue, 0, 1, 0);
 
