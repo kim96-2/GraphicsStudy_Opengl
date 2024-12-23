@@ -77,9 +77,9 @@ void main(){
 
 	vec3 phongColor = calculatePhong(diffuseColor.rgb,halfNdotL,NdotH);
 
-	float fresnelValue = calculateFresnel(0.1,NdotV);
+	float fresnelValue = calculateFresnel(0.5,NdotV);
 
-	vec3 reflectDir = reflect(lightDir,normal);
+	vec3 reflectDir = reflect(viewDir,normal);
 	mat4x4 viewRotMat = mat4(mat3(MODELVIEW_MATRIX));//야메 방법 -> 카메라 회전 행렬을 ModelView 행렬에서 계산
 	reflectDir = (viewRotMat * vec4(reflectDir,1)).xyz;
 
