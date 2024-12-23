@@ -36,7 +36,7 @@ void main(){
 	move[3] = vec4(0,0,0,1);
 
 	//모델뷰 메트릭스에서 이동 부분 제거
-	mat4 modelview = mat4(mat3(MODELVIEW_MATRIX));
+	mat4x4 modelview = mat4(mat3(MODELVIEW_MATRIX));
 
     vec4 posPS =  PROJECTION_MATRIX * modelview * scale * vec4(pos,1.0);
 	posPS.z = 0;

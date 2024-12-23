@@ -26,7 +26,7 @@ void main(){
 
 
 	vec3 lightDir = normalize(data_in.lightDirectionWS);
-	vec3 vewDir = normalize(data_in.viewDirectionWS);
+	vec3 viewDir = normalize(data_in.viewDirectionWS);
 
 	float ndotl = dot(normal,lightDir);
 	float halfNdotL = ndotl * 0.5 + 0.5;
@@ -37,7 +37,7 @@ void main(){
 	ndotl = ndotl < 0 ? 0 : ndotl;
 
 	//Blinn Phong으로 Specular 계산
-	vec3 H = normalize(lightDir + vewDir);
+	vec3 H = normalize(lightDir + viewDir);
 	float NdotH = dot(normal,H);
 	NdotH = NdotH < 0 ? 0 : NdotH;
 

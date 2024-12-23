@@ -126,7 +126,7 @@ void InitModel() {
 
 	shaderProgram->Use();//Shader Program 사용	
 	
-	
+
 	char modelPath[] = "./resources/statue/CB_Discobolus_LOD0.FBX";
 	model = new Model(modelPath);
 
@@ -134,8 +134,8 @@ void InitModel() {
 
 	model->SetTextureDataFromFile("./resources/statue/manstatue.png","texture_diffuse");
 	model->SetTextureDataFromFile("./resources/statue/manstatue_N.png", "texture_normal");
-	
-	
+
+
 	/*
 	char modelPath[] = "./resources/RobotKyle/KyleRobot.fbx";
 	model = new Model(modelPath);
@@ -225,7 +225,7 @@ void displayFunc() {
 
 //시간 지나갈떄 마다 오브젝트 돌아가게 하는 함수
 void TimerFunc(int value) {
-	rotateValue += 1.0f;
+	rotateValue += 0.1f;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
