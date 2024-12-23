@@ -5,8 +5,11 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 
+#if defined(STB_IMAGE_IMPLEMENTATION)
+#else
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#endif
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -24,9 +27,17 @@ unsigned int TextureFromFile(const char* path, bool gamma = false);
 class Model
 {
 public:
+    float scale[3];//크기
+    void SetScale(float x, float y, float z) {
+        scale[0] = x;
+        scale[1] = y;
+        scale[2] = z;
+    }
+
     /*  함수   */
     Model(char* path)
     {
+        SetScale(1, 1, 1);
         loadModel(path);
     }
     void Draw(Shader* shader);
@@ -34,6 +45,8 @@ public:
     vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 
     void SetTextureDataFromFile(const char* path, string type);
+
+    
 private:
     vector<Texture> textures_loaded;//최적화를 위해 실제 불러온 Texture인지 확인하는 변수
 
@@ -51,8 +64,14 @@ private:
 
 void Model::Draw(Shader* shader)
 {
+    glPushMatrix();
+    glScalef(scale[0], scale[0], scale[0]);
     for (unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(*shader);
+
+    glPopMatrix();
+
+
 }
 
 void Model::loadModel(string path) {

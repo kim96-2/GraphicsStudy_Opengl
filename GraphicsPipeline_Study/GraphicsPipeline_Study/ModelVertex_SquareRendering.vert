@@ -32,11 +32,13 @@ void main(){
 	float dis = length(positionWS);
 	vec3 dir = positionWS / dis;
 
-	float x_a = acos(-dir.z / sqrt(dir.x * dir.x + dir.z * dir.z));
-	x_a = dir.x > 0 ? x_a : -x_a;
+	float x_a = atan(dir.x,-dir.z);
+	//float x_a = acos(-dir.z / sqrt(dir.x * dir.x + dir.z * dir.z));
+	//x_a = dir.x > 0 ? x_a : -x_a;
 
-	float y_a = acos(-dir.z / sqrt(dir.y * dir.y + dir.z * dir.z));
-	y_a = dir.y > 0 ? y_a : -y_a;
+	float y_a = acos(-dir.y);
+	//float y_a = acos(-dir.z / sqrt(dir.y * dir.y + dir.z * dir.z));
+	//y_a = dir.y > 0 ? y_a : -y_a;
 
 	gl_Position = vec4(x_a /PI, y_a /PI,dis / 1000, 1);
 

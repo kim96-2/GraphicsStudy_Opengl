@@ -111,8 +111,8 @@ void FrameBuffer::DrawFrameBuffer() {
 
     frameBufferProgram->Use();
 
-    glActiveTexture(GL_TEXTURE0);
     frameBufferProgram->SetTexture("ColorBufferTexture", 0);
+    glActiveTexture(GL_TEXTURE0);  
     glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
 
     glBindVertexArray(VAO);

@@ -14,8 +14,10 @@
 #include "Model.h"
 #include "FrameBuffer.h"
 
+#include "SphereMap.h"
+
 //화면 크기 고정
-#define WIDTH 600
+#define WIDTH 800
 #define HEIGHT 600
 
 //Shader 선언
@@ -24,6 +26,11 @@ Shader* normalShaderProgram;
 
 //그릴 모델 선언
 Model* model;
+
+//Sky Map 선언
+SphereMap* sphereMap;
+const char sphereMapPath[] = "./resources/Skymap/ny_spheremap.tga";
+const char diffuseMapPath[] = "./resources/Skymap/ny_diffusemap.tga";
 
 //Frame Buffer 선언
 FrameBuffer* frameBuffer;
@@ -105,9 +112,11 @@ void InitModelShader() {
 	//shaderProgram = new Shader("ModelVertex.vert","ModelFragment.frag");
 	shaderProgram = new Shader();
 	//shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex.vert");					//Vertex Shader 추가
-	shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex_SquareRendering.vert");	
 	//shaderProgram->AddShader(GL_GEOMETRY_SHADER, "ModelGeometry.geom");				//Geometry Shader 추가
-	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "ModelFragment.frag");				//Fragment Shader 추가
+	//shaderProgram->AddShader(GL_FRAGMENT_SHADER, "ModelFragment.frag");				//Fragment Shader 추가
+
+	shaderProgram->AddShader(GL_VERTEX_SHADER, "ModelVertex_SML.vert");					//Vertex Shader 추가
+	shaderProgram->AddShader(GL_FRAGMENT_SHADER, "ModelFragment_SML.frag");				//Fragment Shader 추가
 
 	shaderProgram->Use();//Shader Program 사용	
 }
@@ -117,21 +126,34 @@ void InitModel() {
 
 	shaderProgram->Use();//Shader Program 사용	
 	
-	/*
+	
 	char modelPath[] = "./resources/statue/CB_Discobolus_LOD0.FBX";
 	model = new Model(modelPath);
 
+	model->SetScale(0.001, 0.001, 0.001);//모델 스케일 줄이기
+
 	model->SetTextureDataFromFile("./resources/statue/manstatue.png","texture_diffuse");
 	model->SetTextureDataFromFile("./resources/statue/manstatue_N.png", "texture_normal");
-	*/
 	
+	
+	/*
 	char modelPath[] = "./resources/RobotKyle/KyleRobot.fbx";
 	model = new Model(modelPath);
 
+	model->SetScale(0.01, 0.01, 0.01);//모델 스케일 줄이기
+
 	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_BaseMap.png", "texture_diffuse");
 	model->SetTextureDataFromFile("./resources/RobotKyle/KyleRobot_Normal.png", "texture_normal");
+	*/
 	
-	
+	//SphereMap Texture 전달하기
+	model->SetTextureDataFromFile(sphereMapPath, "texture_sphereMap");
+	model->SetTextureDataFromFile(diffuseMapPath, "texture_diffuseMap");
+}
+
+void InitSphereMap() {
+	//sphereMap = new SphereMap("Vertex.vert", "Fragment.frag",
+	sphereMap = new SphereMap("SphereMapVertex.vert", "SphereMapFragment.frag",sphereMapPath);
 }
 
 void InitFrameBuffer() {
@@ -143,7 +165,7 @@ void InitDisplay() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(50, (float)WIDTH / HEIGHT, 0.01, 10000);
+	gluPerspective(110, (float)WIDTH / HEIGHT, 0.01, 1000);
 
 	//광원 방향 Shader에 지정 및 전달
 	shaderProgram->SetVector3f("lightDirection", -1.0f, 1.0f, 0.5f);
@@ -174,14 +196,14 @@ void displayFunc() {
 	glClearColor(0.0f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	sphereMap->Draw();
+
 	shaderProgram->Use();//Shader Program 사용
 	shaderProgram->SetModelProjection();//MVP 연동
-	
-	glMatrixMode(GL_MODELVIEW);
-	
 
 	glLineWidth(1.5);
-	//DrawModel();
+	DrawModel();
+	/*
 	for (int _x = -2;_x <= 2;_x++) {
 		for (int _y = -5;_y <= 5;_y++) {
 			for (int _z = -3;_z <= 3;_z++) {
@@ -193,6 +215,7 @@ void displayFunc() {
 			
 		}
 	}
+	*/
 	glLineWidth(1.0);
 
 	frameBuffer->DrawFrameBuffer();
@@ -207,7 +230,7 @@ void TimerFunc(int value) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	//glRotatef(rotateValue, 0, 1, 0);
-	gluLookAt(0, 100, -300, 0, 100, 0, 0, 1, 0);
+	gluLookAt(0, 1, -1.5, 0, 1, 0, 0, 1, 0);
 	glRotatef(rotateValue, 0, 1, 0);
 
 	frameBuffer->frameBufferProgram->SetFloat("timer", rotateValue);
@@ -246,6 +269,8 @@ int main(int argc, char* argv[]) {
 
 	//InitVertex();
 	InitModel();
+
+	InitSphereMap();
 
 	InitFrameBuffer();
 

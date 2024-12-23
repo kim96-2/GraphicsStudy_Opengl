@@ -131,7 +131,8 @@ void Mesh::Draw(Shader shader) {
             number = std::to_string(specularNr++); // transfer unsigned int to string
         else if (name == "texture_normal")
             number = std::to_string(normalNr++); // transfer unsigned int to string
-
+        else
+            number = "";//따른 이름 규칙이 없을 경우 번호 부착하지 않기
 
         //std::cout << "Set Texture : " << name << number << endl;
         // now set the sampler to the correct texture unit(sampler도 int형 바인딩 포인터 개념인듯)

@@ -25,6 +25,9 @@
     <Filter Include="리소스 파일\Shaders\FrameBuffer">
       <UniqueIdentifier>{978c0e06-7d44-4a29-a634-65905db66c4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Shaders\SphereMap">
+      <UniqueIdentifier>{ab16b8a2-3037-4440-800f-6c1c8f06cddc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pipeline.cpp">
@@ -71,6 +74,18 @@
     <None Include="ModelVertex_SquareRendering.vert">
       <Filter>리소스 파일\Shaders\Model</Filter>
     </None>
+    <None Include="SphereMapVertex.vert">
+      <Filter>리소스 파일\Shaders\SphereMap</Filter>
+    </None>
+    <None Include="SphereMapFragment.frag">
+      <Filter>리소스 파일\Shaders\SphereMap</Filter>
+    </None>
+    <None Include="ModelVertex_SML.vert">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
+    <None Include="ModelFragment_SML.frag">
+      <Filter>리소스 파일\Shaders\Model</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -86,6 +101,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -141,11 +141,15 @@
     <None Include="FrameBufferVertex.vert" />
     <None Include="geomaty.geom" />
     <None Include="ModelFragment.frag" />
+    <None Include="ModelFragment_SML.frag" />
     <None Include="ModelGeometry.geom" />
     <None Include="ModelVertex.vert" />
+    <None Include="ModelVertex_SML.vert" />
     <None Include="ModelVertex_SquareRendering.vert" />
     <None Include="normalFragment.frag" />
     <None Include="normalGeomatry.geom" />
+    <None Include="SphereMapFragment.frag" />
+    <None Include="SphereMapVertex.vert" />
     <None Include="TessCS.glsl" />
     <None Include="TessES.glsl" />
     <None Include="vertex.vert" />
@@ -155,6 +159,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SphereMap.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
